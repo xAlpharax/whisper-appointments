@@ -1,3 +1,8 @@
+# audio files (WAV preferably) and other sensitive files
+*.wav
+*.avi
+*.mp3
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
