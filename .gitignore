@@ -3,6 +3,11 @@
 *.avi
 *.mp3
 
+models/
+edge/node_modules/
+package-lock.json
+.gradio/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

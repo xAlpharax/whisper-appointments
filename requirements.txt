@@ -1,2 +1,7 @@
 gradio
 gradio_client
+python-dotenv
+piper-tts
+edge_tts
+requests
+aiohttp

@@ -1,41 +1,45 @@
 #!/usr/bin/env python3
 
+##############################################################################
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+STT_API_URL = str(os.getenv("STT_API_URL"))
+
 from gradio_client import Client, handle_file
 
-client = Client("http://192.168.100.136:8000/")
-result = client.predict(
-		# file_path=handle_file('https://github.com/gradio-app/gradio/raw/main/test/test_files/audio_sample.wav'),
-        file_path=handle_file('./test.wav'),
-        model="Systran/faster-whisper-large-v3",
-        task="transcribe",
-        temperature=0,
-        stream=True,
-        api_name="/predict"
-)
-print(result)
+## WE NEED A BETTER MODEL FOR THIS, WHISPER-LARGE-V3 preferably
 
-# Aditional api calls for cleaning up
+def voice_to_text(file_path="output.wav", server_url=STT_API_URL):
+    """
+    Transcribe audio file to text using a Gradio API.
 
-# from gradio_client import Client, handle_file
+    Args:
+        file_path (str): Path to the audio file.
+        server_url (str): URL of the Gradio server.
 
-# client = Client("http://192.168.100.136:8000/")
+    Returns:
+        str: The transcribed text or an error message if something goes wrong.
+    """
+    client = Client(server_url)
 
-# client.predict(
-  # api_name="/lambda"
-# )
+    try:
+        return client.predict(
+            file_path=handle_file(file_path),
+            model="Systran/faster-whisper-large-v3",
+            task="transcribe",
+            temperature=0,
+            stream=True,
+            api_name="/predict"
+        )
+    except Exception as e:
+        return f"An error occurred: {e}"
 
-# result = client.predict(
-  # file_path=handle_file('http://192.168.100.136:8000/file=/tmp/gradio/44e8f9cfd1a7cb73358f141516253feccbbbdf85cbc6a87c42f4d17622ddf2f3/hello_and_request.wav'),
-  # file_path=handle_file('./test.wav'),
-  # model="Systran/faster-whisper-large-v3",
-  # task="transcribe",
-  # temperature=0.4,
-  # stream=True,
-  # api_name="/predict"
-# )
+if __name__ == "__main__":
+    audio_file = "MZ2db44cf0728671ed59835a955cc8376f.wav"  # Replace with your audio file path
 
-# client.predict(
-  # api_name="/cleanup"
-# )
+    transcription = voice_to_text(audio_file)
 
-# print(result)
+    print(f"Transcription result: {transcription}")
