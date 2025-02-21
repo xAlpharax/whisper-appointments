@@ -74,9 +74,10 @@ if __name__ == "__main__":
     output_filename = "output.wav"
 
     # Call the function
-    success = text_to_voice(text_input, output_filename, model='models/en_US-lessac-medium.onnx')
+    # success = text_to_voice(text_input, output_filename, model='models/en_US-lessac-medium.onnx')
+    success = text_to_voice_edge_tts(text_input, voice='en-US-GuyNeural')
 
     if success:
-        print(f"Audio file '{output_filename}' created successfully.")
+        print(f"Audio file created successfully.")
     else:
         print("Failed to create audio file.")
